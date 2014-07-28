@@ -1,6 +1,52 @@
 require 'rubygems'
 require 'json'
 
+
+class Movie
+
+  attr_accessor :id, :length, :title, :popularity, :year
+
+  def initialize(id,length, title, popularity, year)
+
+    @id = id 
+    @length = length
+    @title = title
+    @popularity = popularity
+    @year = year
+  end
+
+end
+
+
+
+class ListOfMovies
+
+  def initialize
+
+    @movies = []
+
+  end
+
+  def size
+    @movies.size
+  end
+
+  def add movie
+    @movies << movie
+  end
+
+  def filter 
+    @movies# HERE
+  end
+
+end
+
+
+
+
+
+
+
 class TopMovies
   def self.generate_top_lists(movies, filter_by_time = false, film_time = 120, delta = 12, group_by_year = false)
     grouped_movies = {}

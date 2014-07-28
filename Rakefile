@@ -1,6 +1,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), "lib"))
 puts $:
 require 'top_movies'
+require 'pry'
 
 task :default => :generate_top_lists
 
@@ -13,17 +14,22 @@ task :generate_top_lists do
   film_time = 120
   delta = 12
 
-  # read the movies file and parse the JSON
-  source_file = File.open(source_path)
-  movies      = JSON.load(source_file)
+  
+      # read the movies file and parse the JSON
+      source_file = File.open(source_path)
+  
+    if source_file.read != ""
 
-  ordered_movies, grouped_movies = TopMovies.generate_top_lists(movies, true, film_time, delta, true)
+      movies      = JSON.load(source_file)
 
-  # saving the files
-  File.open(grouped_films_path, 'w+') { |f| f.write(JSON.pretty_generate(grouped_movies)) }
-  File.open(ordered_films_path, 'w+') { |f| f.write(JSON.pretty_generate(ordered_movies)) }
+      ordered_movies, grouped_movies = TopMovies.generate_top_lists(movies, true, film_time, delta, true)
 
-  # we clear the file
-  File.truncate(source_path, 0)
+      # saving the files
+      File.open(grouped_films_path, 'w+') { |f| f.write(JSON.pretty_generate(grouped_movies)) }
+      File.open(ordered_films_path, 'w+') { |f| f.write(JSON.pretty_generate(ordered_movies)) }
+
+      # we clear the file
+      File.truncate(source_path, 0)
+    end
 end
 
